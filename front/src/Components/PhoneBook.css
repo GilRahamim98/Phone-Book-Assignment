@@ -1,0 +1,22 @@
+.scroll {
+    margin-top: 5%;
+    max-height: 230px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.search_bar {
+    width: 20%;
+    margin-left: 40%;
+}
+
+.topcorner {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
