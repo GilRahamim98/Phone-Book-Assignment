@@ -7,12 +7,18 @@ const contacts = [
     { id: 6, first_name: "Gal", last_name: "Cohen", nickname: "Gali", phone_numbers: ["0505384448", "031456567"], address: "Ben Gurion 48,Tel Aviv", photo: "https://e7.pngegg.com/pngimages/670/509/png-clipart-avatar-female-girls-avatar-purple-face-thumbnail.png" },
     { id: 7, first_name: "Dorit", last_name: "Mer", nickname: "Dora", phone_numbers: ["0525381712", "041234578"], address: "Danin 15,Holon", photo: "https://e7.pngegg.com/pngimages/670/509/png-clipart-avatar-female-girls-avatar-purple-face-thumbnail.png" },
     { id: 8, first_name: "Dima", last_name: "Bilan", nickname: "Dimitri", phone_numbers: ["0545321667", "0525358667"], address: "Havered 12,Rehovot", photo: "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png" }
-]
+].sort((a, b) => (a.first_name < b.first_name) ? 1 : ((b.first_name < a.first_name) ? -1 : 0))
 
 
 export const getContacts = () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => resolve(contacts), 1000)
     })
-
+}
+export const pushEvent = () => {
+    contacts.push(contacts.shift())
+    console.log(contacts);
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(contacts), 1000)
+    })
 }

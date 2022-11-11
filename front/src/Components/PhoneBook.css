@@ -1,6 +1,6 @@
 .scroll {
     margin-top: 5%;
-    max-height: 230px;
+    max-height: 270px;
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
