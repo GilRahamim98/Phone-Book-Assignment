@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getContacts } from '../DAL/api'
+import { getContacts, pushEvent } from '../DAL/api'
 import ContactInList from './ContactInList'
 import './PhoneBook.css'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -19,16 +19,18 @@ function PhoneBook() {
     const [contacts, setContacts] = useState([])
     const [showAddForm, setShowAddForm] = useState(false);
 
+
     const handleCloseAddForm = () => setShowAddForm(false);
     const handleShowAddForm = () => setShowAddForm(true);
     useEffect(() => {
         async function getContactsList() {
-
             setContacts(await getContacts())
 
         }
         getContactsList()
     }, [])
+
+
 
     const renderHover = (
         <Popover id="popover-basic">
@@ -37,11 +39,29 @@ function PhoneBook() {
             </Popover.Body>
         </Popover>
     );
+    const handleScroll = async (e) => {
+        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+        const top = e.target.scrollHeight - e.target.clientHeight === 5
+        console.log(e.target.scrollHeight - e.target.clientHeight);
+
+
+        if (bottom) {
+            const newContacts = [...contacts]
+            const firstContact = newContacts.shift()
+            newContacts.push(firstContact)
+            setContacts(newContacts)
+        } else if (top) {
+            console.log("hey");
+        }
+
+    }
 
 
     const createList = () => {
-        return contacts.sort((a, b) => (a.first_name < b.first_name) ? 1 : ((b.first_name < a.first_name) ? -1 : 0)).map(contact => <ContactInList key={contact.id} {...contact}></ContactInList>)
+        return contacts.length >= 5 ? contacts.slice(0, 5).map(contact => <ContactInList key={contact.id} {...contact}></ContactInList>) : contacts.map(contact => <ContactInList key={contact.id} {...contact}></ContactInList>)
     }
+
+
     return (
         <div>
             <OverlayTrigger rootClose placement="bottom" overlay={renderHover} >
@@ -64,7 +84,7 @@ function PhoneBook() {
                 </section>
 
 
-                <div className='scroll'>
+                <div className='scroll' onScroll={handleScroll}>
                     {contacts ? createList() : null}
 
                 </div>
@@ -74,7 +94,7 @@ function PhoneBook() {
                     </Modal.Header>
                     <Modal.Body><ContactForm></ContactForm></Modal.Body>
                     <Modal.Footer>
-                        <Button variant="outline-light" onClick={handleCloseAddForm}>
+                        <Button variant="outline-danger" onClick={handleCloseAddForm}>
                             Discard
                         </Button>
                         <Button variant="outline-dark" onClick={handleCloseAddForm}>
