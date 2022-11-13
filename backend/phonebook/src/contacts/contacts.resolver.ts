@@ -17,10 +17,8 @@ export class ContactsResolver {
   }
 
   @Query(() => [Contact], { name: 'contacts', nullable: 'items' })
-  async getContacts(
-    @Args() getContactsArgs: GetContactsArgs,
-  ): Promise<Contact[]> {
-    return this.contactsService.getContacts(getContactsArgs);
+  async getContacts(): Promise<Contact[]> {
+    return this.contactsService.getContacts();
   }
 
   @Mutation(() => Contact)
