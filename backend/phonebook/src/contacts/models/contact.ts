@@ -8,7 +8,7 @@ export class Contact {
   firstName: string;
   @Field()
   lastName: string;
-  @Field()
+  @Field({ nullable: true })
   nickname?: string;
   @Field(() => [String])
   phoneNumbers: string[];
