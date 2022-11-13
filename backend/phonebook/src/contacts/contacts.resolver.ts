@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ContactsService } from './contacts.service';
 import { GetContactArgs } from './dto/args/get-contact.args';
@@ -11,30 +10,37 @@ import { Contact } from './models/contact';
 @Resolver(() => Contact)
 export class ContactsResolver {
   constructor(private readonly contactsService: ContactsService) {}
-  
-  @Query(()=>Contact,{name:'contact',nullable:true})
-  async getContact(@Args() getContactArgs:GetContactArgs): Promise<Contact> {
-    return this.contactsService.getContact();
+
+  @Query(() => Contact, { name: 'contact', nullable: true })
+  async getContact(@Args() getContactArgs: GetContactArgs): Promise<Contact> {
+    return this.contactsService.getContact(getContactArgs);
   }
 
-  @Query(()=>[Contact],{name:'contacts',nullable:'items'})
-  async getContacts(@Args() getContactsArgs:GetContactsArgs): Promise<Contact[]> {
-    return this.contactsService.getContacts();
+  @Query(() => [Contact], { name: 'contacts', nullable: 'items' })
+  async getContacts(
+    @Args() getContactsArgs: GetContactsArgs,
+  ): Promise<Contact[]> {
+    return this.contactsService.getContacts(getContactsArgs);
   }
 
-  @Mutation(()=>Contact)
-  async createContact(@Args('createContactData') createContactData:CreateContactInput):Promise<Contact>{
-    return this.contactsService.createContact()
+  @Mutation(() => Contact)
+  async createContact(
+    @Args('createContactData') createContactData: CreateContactInput,
+  ): Promise<Contact> {
+    return this.contactsService.createContact(createContactData);
   }
 
-  @Mutation(()=>Contact)
-  async updateContact(@Args('updateContactData') updateContactData:UpdateContactInput):Promise<Contact>{
-    return this.contactsService.updateContact()
+  @Mutation(() => Contact)
+  async updateContact(
+    @Args('updateContactData') updateContactData: UpdateContactInput,
+  ): Promise<Contact> {
+    return this.contactsService.updateContact(updateContactData);
   }
 
-  @Mutation(()=>Contact)
-  async deleteContact(@Args('deleteContactData') deleteContactData:DeleteContactInput):Promise<Contact>{
-    return this.contactsService.deleteContact()
+  @Mutation(() => Contact)
+  async deleteContact(
+    @Args('deleteContactData') deleteContactData: DeleteContactInput,
+  ): Promise<Contact> {
+    return this.contactsService.deleteContact(deleteContactData);
   }
-
 }

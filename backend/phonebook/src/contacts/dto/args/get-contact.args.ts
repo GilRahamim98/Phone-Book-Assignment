@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { IsNotEmpty } from '@nestjs/class-validator';
 import { ArgsType, Field } from '@nestjs/graphql';
 

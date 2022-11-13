@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty } from '@nestjs/class-validator';
 
@@ -15,7 +14,7 @@ export class CreateContactInput {
   @Field()
   nickname?: string;
 
-  @Field()
+  @Field(() => [String])
   @IsNotEmpty()
   phoneNumbers: string[];
 
