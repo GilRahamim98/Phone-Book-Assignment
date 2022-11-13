@@ -1,11 +1,19 @@
-/* eslint-disable prettier/prettier */
-export class Contact{
-    contactId:string;
-    firstName:string;
-    lastName:string;
-    nickname?:string;
-    phoneNumbers:string[];
-    address:string;
-    photo:string;
-    
+import { Field, ObjectType } from '@nestjs/graphql';
+
+@ObjectType()
+export class Contact {
+  @Field()
+  contactId: string;
+  @Field()
+  firstName: string;
+  @Field()
+  lastName: string;
+  @Field()
+  nickname?: string;
+  @Field(() => [String])
+  phoneNumbers: string[];
+  @Field()
+  address: string;
+  @Field()
+  photo: string;
 }
