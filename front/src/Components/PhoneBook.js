@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getContacts, pushEvent } from '../DAL/api'
+import { getContacts, pushEvent, useContacts } from '../DAL/api'
 import ContactInList from './ContactInList'
 import './PhoneBook.css'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -16,6 +16,7 @@ import ContactForm from './ContactForm';
 
 
 function PhoneBook() {
+    const { error, loading, data } = useContacts()
     const [contacts, setContacts] = useState([])
     const [showAddForm, setShowAddForm] = useState(false);
 
@@ -58,7 +59,8 @@ function PhoneBook() {
 
 
     const createList = () => {
-        return contacts.length >= 5 ? contacts.slice(0, 5).map(contact => <ContactInList key={contact.id} {...contact}></ContactInList>) : contacts.map(contact => <ContactInList key={contact.id} {...contact}></ContactInList>)
+        console.log(data.contacts);
+        return data.contacts.slice(0, 5).map(contact => <ContactInList key={contact.contactId} {...contact}></ContactInList>)
     }
 
 
@@ -85,7 +87,7 @@ function PhoneBook() {
 
 
                 <div className='scroll' onScroll={handleScroll}>
-                    {contacts ? createList() : null}
+                    {loading ? null : createList()}
 
                 </div>
                 <Modal show={showAddForm} onHide={handleCloseAddForm}>

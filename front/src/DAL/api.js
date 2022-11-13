@@ -1,3 +1,27 @@
+import { useQuery, gql } from '@apollo/client'
+
+const GET_CONTACTS = gql`
+    query{
+        contacts{
+            contactId
+            firstName
+            lastName
+            photo
+            
+          }
+    }
+`
+export const useContacts = () => {
+    const { error, data, loading } = useQuery(GET_CONTACTS);
+
+    return {
+        error,
+        data,
+        loading
+    }
+
+}
+
 const contacts = [
     { id: 1, first_name: "David", last_name: "Cohen", nickname: "Dado", phone_numbers: ["0525381648", "031234567"], address: "Balfur 87,Holon", photo: "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png" },
     { id: 2, first_name: "Gila", last_name: "Ronen", nickname: "Gili", phone_numbers: ["0525381647"], address: "Herzal 85,Haifa", photo: "https://e7.pngegg.com/pngimages/670/509/png-clipart-avatar-female-girls-avatar-purple-face-thumbnail.png" },
