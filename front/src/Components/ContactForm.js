@@ -69,14 +69,25 @@ function ContactForm() {
     const addContact = () => {
         createContact({
             variables: {
-                firstName: contactForm.firstname.value,
-                lastName: contactForm.lastname.value,
-                nickname: contactForm.nickname.value,
-                phoneNumbers: contactForm.phonenumbers.value.split(','),
-                address: contactForm.address.value,
-                photo: contactForm.photo.value
+                firstName: "Dani",
+                // lastName: "Lolo",
+                // nickname: "Dan",
+                // phoneNumbers: ["0525381649"],
+                // address: "Golani 70,Ramat Gan",
+                // photo: ["https://upcdn.io/W142hJk/raw/demo/4Da9imN.jpg", "grayscale(20 %) blur(3px) saturate(193 %)"]
             }
         })
+
+        // createContact({
+        //     variables: {
+        //         firstName: contactForm.firstname.value,
+        //         lastName: contactForm.lastname.value,
+        //         nickname: contactForm.nickname.value,
+        //         phoneNumbers: contactForm.phonenumbers.value.split(','),
+        //         address: contactForm.address.value,
+        //         photo: [contactForm.photo.value, getImageStyle().filter]
+        //     }
+        // })
 
         if (error) {
             console.log(error)
@@ -116,9 +127,9 @@ function ContactForm() {
 
         return { filter: options.join(' ') }
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        addContact()
+        await addContact()
 
     }
 

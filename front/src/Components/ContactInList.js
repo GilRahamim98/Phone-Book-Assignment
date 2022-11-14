@@ -13,7 +13,7 @@ function ContactInList(contact) {
     const handleShowEditForm = () => setShowEditForm(true);
 
     return (
-        <div >{contact.nickname ? <h1>{contact.nickname}</h1> : <div><h1>{contact.firstName} {contact.lastName} <img className="contact_photo" src={contact.photo} alt={contact.first_name} style={{ display: "inline-block" }} ></img></h1> </div>}</div >
+        <div >{contact.nickname ? <h1>{contact.nickname}</h1> : <div><h1>{contact.firstName} {contact.lastName} <img className="contact_photo" src={contact.photo[0]} alt={contact.first_name} style={{ display: "inline-block", filter: `${contact.photo[1]}` }} ></img></h1> </div>}</div >
     )
 }
 

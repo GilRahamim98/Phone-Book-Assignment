@@ -4,9 +4,9 @@ export const CREATE_CONTACT = gql`
     $firstName:String!,
     $lastName:String!,
     $nickname:String!,
-    $phoneNumbers:[String!]!,
-    $address:String!,
-    $photo:String!){
+    $phoneNumbers:[String],
+    $address:String,
+    $photo:[String]){
         createContact(
             firstName: $firstName,
             lastName: $lastName,
@@ -14,9 +14,9 @@ export const CREATE_CONTACT = gql`
             phoneNumbers: $phoneNumbers,
             address: $address,
             photo: $photo
+            
         ){
             contactId
         }
-
     }
 `
