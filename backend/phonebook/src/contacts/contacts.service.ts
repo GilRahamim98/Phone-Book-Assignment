@@ -18,23 +18,11 @@ export class ContactsService {
   private contacts: Contact[] = [];
 
   async createContact(createContactData: CreateContactInput): Promise<Contact> {
-    // const contact: Contact = {
-    //   contactId: uuidv4(),
-    //   ...createContactData,
-    // };
-    // this.contacts.push(contact);
-    // return contact;
     const contact = this.contactRepository.create(createContactData);
     return await this.contactRepository.save(contact);
   }
 
   async updateContact(updateContactData: UpdateContactInput): Promise<Contact> {
-    // const contact = this.contacts.find(
-    //   (contact) => contact.contactId === updateContactData.contactId,
-    // );
-
-    // Object.assign(contact, updateContactData);
-    // return contact;
     const contact = await this.contactRepository.preload({
       contactId: updateContactData.contactId,
       ...updateContactData,
@@ -48,9 +36,6 @@ export class ContactsService {
   }
 
   async getContact(getContactArgs: GetContactArgs): Promise<Contact> {
-    // return this.contacts.find(
-    //   (contact) => contact.contactId === getContactArgs.contactId,
-    // );
     const contact = await this.contactRepository.findOne({
       where: {
         contactId: getContactArgs.contactId,
@@ -65,19 +50,10 @@ export class ContactsService {
   }
 
   async getContacts(): Promise<Contact[]> {
-    // return getContactsArgs.contactIds.map((contactId) =>
-    //   this.getContact({ contactId }),
-    // );
     return this.contactRepository.find();
   }
 
   async deleteContact(deleteContactData: DeleteContactInput): Promise<Contact> {
-    // const contactIndex = this.contacts.findIndex(
-    //   (contact) => contact.contactId === deleteContactData.contactId,
-    // );
-    // const contact = this.contacts[contactIndex];
-    // this.contacts.splice(contactIndex);
-    // return contact;
     const contact = await this.getContact(deleteContactData);
     await this.contactRepository.remove(contact);
     return contact;

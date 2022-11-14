@@ -23,7 +23,7 @@ export class CreateContactInput {
   @IsNotEmpty()
   address: string;
 
-  @Field()
+  @Field(() => [String])
   @IsNotEmpty()
-  photo: string;
+  photo: string[];
 }

@@ -17,12 +17,10 @@ export class Contact {
   @Field({ description: 'nickname of the contact' })
   nickname?: string;
   @Column('text', { array: true })
-  //   @Field(() => [String], { description: 'phone numbers  of the contact' })
   phoneNumbers: string[];
   @Column()
   @Field(() => String, { description: 'address of the contact' })
   address: string;
-  @Column()
-  @Field(() => String, { description: 'photo of the contact' })
-  photo: string;
+  @Column('text', { array: true })
+  photo: string[];
 }
