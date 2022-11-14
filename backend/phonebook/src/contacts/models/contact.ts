@@ -14,6 +14,6 @@ export class Contact {
   phoneNumbers: string[];
   @Field()
   address: string;
-  @Field()
-  photo: string;
+  @Field(() => [String])
+  photo: string[];
 }

@@ -31,8 +31,8 @@ export class UpdateContactInput {
   @IsNotEmpty()
   address: string;
 
-  @Field()
+  @Field(() => [String])
   @IsOptional()
   @IsNotEmpty()
-  photo: string;
+  photo: string[];
 }
