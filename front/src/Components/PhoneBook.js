@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getContacts, pushEvent, useContacts } from '../DAL/api'
+import { useContacts } from '../hooks/useContacts'
 import ContactInList from './ContactInList'
 import './PhoneBook.css'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -21,15 +21,19 @@ function PhoneBook() {
     const [showAddForm, setShowAddForm] = useState(false);
 
 
+
     const handleCloseAddForm = () => setShowAddForm(false);
     const handleShowAddForm = () => setShowAddForm(true);
     useEffect(() => {
         async function getContactsList() {
-            setContacts(await getContacts())
+            if (!loading) {
+                setContacts([...data.contacts])
+
+            }
 
         }
         getContactsList()
-    }, [])
+    }, [loading])
 
 
 
@@ -42,8 +46,8 @@ function PhoneBook() {
     );
     const handleScroll = async (e) => {
         const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-        const top = e.target.scrollHeight - e.target.clientHeight === 5
-        console.log(e.target.scrollHeight - e.target.clientHeight);
+
+
 
 
         if (bottom) {
@@ -51,16 +55,14 @@ function PhoneBook() {
             const firstContact = newContacts.shift()
             newContacts.push(firstContact)
             setContacts(newContacts)
-        } else if (top) {
-            console.log("hey");
         }
+
 
     }
 
 
     const createList = () => {
-        console.log(data.contacts);
-        return data.contacts.slice(0, 5).map(contact => <ContactInList key={contact.contactId} {...contact}></ContactInList>)
+        return contacts.slice(0, 5).map(contact => <ContactInList key={contact.contactId} {...contact}></ContactInList>)
     }
 
 
@@ -88,6 +90,7 @@ function PhoneBook() {
 
                 <div className='scroll' onScroll={handleScroll}>
                     {loading ? null : createList()}
+                    {error ? <h1>Something Went Wrong!</h1> : null}
 
                 </div>
                 <Modal show={showAddForm} onHide={handleCloseAddForm}>
