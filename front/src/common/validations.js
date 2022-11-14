@@ -8,12 +8,5 @@ export const validate = (name, value, validations) => {
             })
         }
     }
-
-    // if (validations.pattern) {
-    //     if (!value.endsWith()) {
-    //         errors.push({ value: `${name} is invalid` })
-    //     }
-    // }
-
     return errors
 }

@@ -2,24 +2,56 @@ import React from 'react'
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
+import { UploadButton } from "react-uploader";
+import { Uploader } from "uploader";
 
 
-function InputField(field) {
+const uploader = Uploader({
+    apiKey: "free"
+});
+
+function InputField(props) {
     return (
-        <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-            <Form.Label>{field.name}</Form.Label>
-            <InputGroup hasValidation>
-                <Form.Control
-                    type="text"
-                    placeholder={field.name}
-                    aria-describedby="inputGroupPrepend"
-                    required
-                />
-                <Form.Control.Feedback type="invalid">
-                    Please enter a valid {field.name}.
-                </Form.Control.Feedback>
-            </InputGroup>
-        </Form.Group>
+        <>
+            {
+                props.type === "file" ?
+                    <> <Form.Group as={Col} md="6" >
+                        <Form.Label>{props.name}</Form.Label>
+                        <InputGroup >
+                            <UploadButton options={{ mimeTypes: ["image/jpeg", "image/png"] }} uploader={uploader}
+                                onComplete={files => files[0] ? props.handleChangePicture(files[0].fileUrl) : null}>
+                                {({ onClick }) =>
+                                    <button onClick={onClick}>
+                                        Upload a photo...
+                                    </button>
+                                }
+                            </UploadButton>
+                        </InputGroup>
+
+                    </Form.Group>
+                    </> :
+                    <Form.Group as={Col} md="6" >
+                        <Form.Label>{props.name}</Form.Label>
+                        <InputGroup hasValidation>
+                            <Form.Control
+                                type={props.type}
+                                name={props.name.toLowerCase().replace(/\s/g, '')}
+                                placeholder={props.name}
+                                aria-describedby="inputGroupPrepend"
+                                required
+                                onChange={props.handleChange}
+
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Please enter a valid {props.name}.
+                            </Form.Control.Feedback>
+                        </InputGroup>
+                    </Form.Group>
+            }
+
+        </>
+
+
     )
 }
 
