@@ -50,12 +50,17 @@ function PhoneBook() {
         const position = e.target.scrollTop;
         if (position > scollPosition.current) {
             if (scrollObj.limit + 5 > contacts.length) {
+                const range = scrollObj.limit + 5 - contacts.length;
+                setScrollObj({ offset: scrollObj.limit - range, limit: scrollObj.limit + 5 - range })
                 return
             }
             setScrollObj({ offset: scrollObj.limit, limit: scrollObj.limit + 5 })
 
         } else {
             if (scrollObj.offset - 5 < 0) {
+                console.log(scrollObj.offset)
+                setScrollObj({ offset: 0, limit: scrollObj.limit - scrollObj.offset })
+
                 return
             }
             setScrollObj({ offset: scrollObj.offset - 5, limit: scrollObj.limit - 5 })
@@ -70,6 +75,7 @@ function PhoneBook() {
     }
 
     const createList = () => {
+        if (contacts.length === 0) return <h1>There are no contacts listed...</h1>
         return contacts.slice(scrollObj.offset, scrollObj.limit).map(contact => <ContactInList key={contact.contactId} contact={contact} getContacts={getContactsList}></ContactInList>)
     }
 
