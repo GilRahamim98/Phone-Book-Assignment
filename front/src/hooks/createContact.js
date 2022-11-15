@@ -6,8 +6,7 @@ export const CREATE_CONTACT = gql`
         createContact(
             createContactData:$createContactData
         ){
-          contactId
-            
+          contactId 
         }
     }
 `

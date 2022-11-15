@@ -23,8 +23,6 @@ function PhoneBook() {
     const [searchVal, setSearchVal] = useState("")
     const searchData = useSearch(searchVal).data
 
-
-
     const handleCloseAddForm = () => setShowAddForm(false);
     const handleShowAddForm = () => setShowAddForm(true);
     useEffect(() => {

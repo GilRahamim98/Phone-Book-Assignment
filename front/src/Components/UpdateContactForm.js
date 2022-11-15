@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { useContacts } from '../hooks/useContacts'
+import React, { useState } from 'react'
 import { UPDATE_CONTACT } from '../hooks/updateContact'
-import { Mutation } from '@apollo/react-components'
+import { Mutation, useMutation } from '@apollo/react-components'
 import InputField from './InputField'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 import FilterSlider from './FilterSlider'
-import { DEFAULT_OPTIONS } from '../common/filters'
 import { validate } from '../common/validations'
+import { DELETE_CONTACT } from '../queries/deleteContact'
 
 function UpdateContactForm(props) {
-    const { error, loading, data } = useContacts()
-
+    const [deleteContact] = useMutation(DELETE_CONTACT)
     const [imgData, setImgData] = useState(null);
-
     const [filters, setFilters] = useState(JSON.parse(props.contact.photo[1]))
-
     const [updateContactForm, setUpdateContactForm] = useState({
         firstname: {
             value: props.contact.firstName,
@@ -115,29 +111,45 @@ function UpdateContactForm(props) {
                 }
             }
         })
+        props.handleCloseEditForm()
         window.location.reload(false);
 
+    }
+    const deleteContactRequest = () => {
+        deleteContact({
+            variables: {
+                deleteContactData: {
+                    contactId: props.contact.contactId
+                }
+            }
+        })
+        window.location.reload(false);
         props.handleCloseEditForm()
+
 
     }
     return (
         <Mutation mutation={UPDATE_CONTACT}>
             {(updateContact, { data }) => (
-                < Form onSubmit={(e) => handleSubmit(e, updateContact)}>
-                    {createForm()}
-                    <div>
-                        <Image className="profile_pic" thumbnail src={imgData ? imgData : props.contact.photo[0]} alt="profilePic" style={getImageStyle()} />
-                        <h1>Filters:</h1>
-                        {filters.map(filter => <FilterSlider key={filter.name}
-                            name={filter.name}
-                            min={filter.range.min}
-                            max={filter.range.max}
-                            value={filter.value}
-                            handleChange={handleSliderChange}></FilterSlider>)}
-                    </div>
+                <>
+                    <Button onClick={() => deleteContactRequest()}>Delete</Button>
 
-                    <Button type="submit">Save Changes!</Button>
-                </Form >
+                    <Form onSubmit={(e) => handleSubmit(e, updateContact)}>
+                        {createForm()}
+                        <div>
+                            <Image className="profile_pic" thumbnail src={imgData ? imgData : props.contact.photo[0]} alt="profilePic" style={getImageStyle()} />
+                            <h1>Filters:</h1>
+                            {filters.map(filter => <FilterSlider key={filter.name}
+                                name={filter.name}
+                                min={filter.range.min}
+                                max={filter.range.max}
+                                value={filter.value}
+                                handleChange={handleSliderChange}></FilterSlider>)}
+                        </div>
+
+                        <Button type="submit">Save Changes!</Button>
+                    </Form >
+                </>
             )}
         </Mutation >
     )
