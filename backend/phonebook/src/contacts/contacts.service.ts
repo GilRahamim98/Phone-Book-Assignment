@@ -43,6 +43,9 @@ export class ContactsService {
         { lastName: ILike(`%${getSearchArgs.searchValue}%`) },
         { nickname: ILike(`%${getSearchArgs.searchValue}%`) },
       ],
+      order: {
+        firstName: 'DESC',
+      },
     });
   }
 
@@ -61,7 +64,11 @@ export class ContactsService {
   }
 
   async getContacts(): Promise<Contact[]> {
-    return this.contactRepository.find();
+    return this.contactRepository.find({
+      order: {
+        firstName: 'DESC',
+      },
+    });
   }
 
   async deleteContact(deleteContactData: DeleteContactInput): Promise<Contact> {
