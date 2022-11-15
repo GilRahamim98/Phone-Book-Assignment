@@ -75,7 +75,6 @@ function ContactForm(props) {
         setContactForm({ ...contactForm })
     }
     const handleSliderChange = ({ target }) => {
-        console.log(filters);
         setFilters(prevFilters => {
             return prevFilters.map((filter) => {
                 if (filter.name !== target.name) return filter

@@ -49,7 +49,6 @@ function PhoneBook() {
     const handleScroll = async (e) => {
         const position = e.target.scrollTop;
         if (position > scollPosition.current) {
-            console.log("down");
             if (scrollObj.limit + 5 > contacts.length) {
                 return
             }

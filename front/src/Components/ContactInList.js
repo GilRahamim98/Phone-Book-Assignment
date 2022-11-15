@@ -10,6 +10,12 @@ function ContactInList(props) {
 
     const handleCloseEditForm = () => setShowEditForm(false)
     const handleShowEditForm = () => setShowEditForm(true)
+    const getImageStyle = (filters) => {
+        const options = filters.map(filter => {
+            return `${filter.property}(${filter.value}${filter.unit})`
+        })
+        return { filter: options.join(' ') }
+    }
 
     return (
         <div>
@@ -19,7 +25,7 @@ function ContactInList(props) {
                 </div>
                 : <div className="contact" onClick={handleShowEditForm}>
                     <h1>{props.contact.firstName} {props.contact.lastName}
-                        <img className="contact_photo" src={props.contact.photo[0]} alt={props.contact.first_name} style={{ display: "inline-block", filter: `${props.contact.photo[1]}` }} />
+                        <img className="contact_photo" src={props.contact.photo[0]} alt={props.contact.first_name} style={getImageStyle(JSON.parse(props.contact.photo[1]))} />
                     </h1>
                 </div>}
             <Modal show={showEditForm} onHide={handleCloseEditForm}>
