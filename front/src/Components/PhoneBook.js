@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useContacts } from '../hooks/useContacts'
 import ContactInList from './ContactInList'
 import './PhoneBook.css'
@@ -22,6 +22,8 @@ function PhoneBook() {
     const [showAddForm, setShowAddForm] = useState(false);
     const [searchVal, setSearchVal] = useState("")
     const searchData = useSearch(searchVal).data
+    const scollPosition = useRef(0)
+    const [scrollObj, setScrollObj] = useState({ offset: 0, limit: 5 })
 
     const handleCloseAddForm = () => setShowAddForm(false);
     const handleShowAddForm = () => setShowAddForm(true);
@@ -45,13 +47,21 @@ function PhoneBook() {
     )
 
     const handleScroll = async (e) => {
-        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-        if (bottom) {
-            const newContacts = [...contacts]
-            const firstContact = newContacts.shift()
-            newContacts.push(firstContact)
-            setContacts(newContacts)
+        const position = e.target.scrollTop;
+        if (position > scollPosition.current) {
+            console.log("down");
+            if (scrollObj.limit + 5 > contacts.length) {
+                return
+            }
+            setScrollObj({ offset: scrollObj.limit, limit: scrollObj.limit + 5 })
+
+        } else {
+            if (scrollObj.offset - 5 < 0) {
+                return
+            }
+            setScrollObj({ offset: scrollObj.offset - 5, limit: scrollObj.limit - 5 })
         }
+        scollPosition.current = position;
     }
     const handleSearchChange = (e) => {
         setSearchVal(e.target.value)
@@ -60,9 +70,8 @@ function PhoneBook() {
         setContacts(searchData.search)
     }
 
-
     const createList = () => {
-        return contacts.slice(0, 5).map(contact => <ContactInList key={contact.contactId} contact={contact} getContacts={getContactsList}></ContactInList>)
+        return contacts.slice(scrollObj.offset, scrollObj.limit).map(contact => <ContactInList key={contact.contactId} contact={contact} getContacts={getContactsList}></ContactInList>)
     }
 
 
