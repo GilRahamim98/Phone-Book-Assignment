@@ -2,6 +2,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ContactsService } from './contacts.service';
 import { GetContactArgs } from './dto/args/get-contact.args';
 import { GetContactsArgs } from './dto/args/get-contacts.args';
+import { GetSearchArgs } from './dto/args/get-search.args';
 import { CreateContactInput } from './dto/input/create-contact.input';
 import { DeleteContactInput } from './dto/input/delete-contact.input';
 import { UpdateContactInput } from './dto/input/update-contact.input';
@@ -19,6 +20,11 @@ export class ContactsResolver {
   @Query(() => [Contact], { name: 'contacts', nullable: 'items' })
   async getContacts(): Promise<Contact[]> {
     return this.contactsService.getContacts();
+  }
+
+  @Query(() => [Contact], { name: 'search', nullable: 'items' })
+  async getSearch(@Args() getSearchArgs: GetSearchArgs): Promise<Contact[]> {
+    return this.contactsService.getSearch(getSearchArgs);
   }
 
   @Mutation(() => Contact)

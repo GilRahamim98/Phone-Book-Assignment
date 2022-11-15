@@ -7,7 +7,9 @@ import { DeleteContactInput } from './dto/input/delete-contact.input';
 import { UpdateContactInput } from './dto/input/update-contact.input';
 import { Contact } from './models/contact';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
+import { GetSearchArgs } from './dto/args/get-search.args';
+import { ILike } from 'typeorm';
 
 @Injectable()
 export class ContactsService {
@@ -33,6 +35,15 @@ export class ContactsService {
       );
     }
     return this.contactRepository.save(contact);
+  }
+  async getSearch(getSearchArgs: GetSearchArgs): Promise<Contact[]> {
+    return this.contactRepository.find({
+      where: [
+        { firstName: ILike(`%${getSearchArgs.searchValue}%`) },
+        { lastName: ILike(`%${getSearchArgs.searchValue}%`) },
+        { nickname: ILike(`%${getSearchArgs.searchValue}%`) },
+      ],
+    });
   }
 
   async getContact(getContactArgs: GetContactArgs): Promise<Contact> {

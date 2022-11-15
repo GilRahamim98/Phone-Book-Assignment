@@ -11,6 +11,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import Modal from 'react-bootstrap/Modal';
 import ContactForm from './ContactForm';
+import { useSearch } from '../hooks/useSearch';
 
 
 
@@ -19,6 +20,8 @@ function PhoneBook() {
     const { error, loading, data } = useContacts()
     const [contacts, setContacts] = useState([])
     const [showAddForm, setShowAddForm] = useState(false);
+    const [searchVal, setSearchVal] = useState("")
+    const searchData = useSearch(searchVal).data
 
 
 
@@ -28,12 +31,11 @@ function PhoneBook() {
         getContactsList(data)
 
     }, [loading])
+
     function getContactsList(data) {
         if (!loading) {
             setContacts([...data.contacts])
-
         }
-
     }
 
     const renderHover = (
@@ -42,7 +44,8 @@ function PhoneBook() {
                 Add new contact!
             </Popover.Body>
         </Popover>
-    );
+    )
+
     const handleScroll = async (e) => {
         const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
         if (bottom) {
@@ -51,8 +54,12 @@ function PhoneBook() {
             newContacts.push(firstContact)
             setContacts(newContacts)
         }
-
-
+    }
+    const handleSearchChange = (e) => {
+        setSearchVal(e.target.value)
+    }
+    const handleOnClickEvent = () => {
+        setContacts(searchData.search)
     }
 
 
@@ -74,9 +81,9 @@ function PhoneBook() {
                         label="Search"
                         className="search_bar"
                     >
-                        <Form.Control type="search" placeholder="Search ..." />
+                        <Form.Control type="search" placeholder="Search ..." onChange={handleSearchChange} />
                     </FloatingLabel>
-                    <Button variant="outline-dark"><VscSearch></VscSearch></Button>
+                    <Button variant="outline-dark" onClick={handleOnClickEvent}><VscSearch></VscSearch></Button>
 
 
                 </section>
