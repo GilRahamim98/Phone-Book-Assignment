@@ -1,5 +1,6 @@
 .contact_photo {
     height: 2.5rem;
+    display: inline-block;
 }
 
 .contact {
