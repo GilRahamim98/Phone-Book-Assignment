@@ -6,3 +6,7 @@
 .contact {
     height: 6rem;
 }
+
+.contact:hover {
+    cursor: pointer;
+}

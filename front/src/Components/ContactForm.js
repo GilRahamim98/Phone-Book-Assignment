@@ -121,7 +121,7 @@ function ContactForm(props) {
     return (
         <Mutation mutation={CREATE_CONTACT}>
             {(createContact, { data }) => (
-                < Form onSubmit={(e) => handleSubmit(e, createContact)}>
+                <Form onSubmit={(e) => handleSubmit(e, createContact)}>
                     {createForm()}
                     {!imgData ?
                         null :
@@ -136,10 +136,10 @@ function ContactForm(props) {
                                 handleChange={handleSliderChange}></FilterSlider>)}
                         </div>
                     }
-                    <Button type="submit">Add!</Button>
-                </Form >
+                    <Button type="submit" size="lg" style={{ width: "15rem", marginTop: "5%" }}>Add Contact</Button>
+                </Form>
             )}
-        </Mutation >
+        </Mutation>
     )
 }
 export default ContactForm
