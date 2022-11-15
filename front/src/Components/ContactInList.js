@@ -27,14 +27,7 @@ function ContactInList(props) {
                     <Modal.Title>Edit Contact</Modal.Title>
                 </Modal.Header>
                 <Modal.Body><UpdateContactForm contact={props.contact} getContacts={props.getContacts} handleCloseEditForm={handleCloseEditForm}></UpdateContactForm></Modal.Body>
-                <Modal.Footer>
-                    <Button variant="outline-danger" onClick={handleCloseEditForm}>
-                        Discard
-                    </Button>
-                    <Button variant="outline-dark" onClick={handleCloseEditForm}>
-                        Add!
-                    </Button>
-                </Modal.Footer>
+
             </Modal>
 
         </div >
