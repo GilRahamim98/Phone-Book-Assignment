@@ -12,12 +12,12 @@ function ContactInList(props) {
     const handleShowEditForm = () => setShowEditForm(true)
 
     return (
-        <div >
+        <div>
             {props.contact.nickname ?
-                <div onClick={handleShowEditForm}>
-                    <h1>{props.contact.nickname}</h1>
+                <div className="contact" onClick={handleShowEditForm}>
+                    <h1 >{props.contact.nickname}</h1>
                 </div>
-                : <div onClick={handleShowEditForm}>
+                : <div className="contact" onClick={handleShowEditForm}>
                     <h1>{props.contact.firstName} {props.contact.lastName}
                         <img className="contact_photo" src={props.contact.photo[0]} alt={props.contact.first_name} style={{ display: "inline-block", filter: `${props.contact.photo[1]}` }} />
                     </h1>
@@ -30,7 +30,7 @@ function ContactInList(props) {
 
             </Modal>
 
-        </div >
+        </div>
     )
 }
 
