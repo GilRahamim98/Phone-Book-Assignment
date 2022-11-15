@@ -96,15 +96,8 @@ function PhoneBook() {
                     <Modal.Header closeButton>
                         <Modal.Title>Add New Contact</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body><ContactForm></ContactForm></Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="outline-danger" onClick={handleCloseAddForm}>
-                            Discard
-                        </Button>
-                        <Button variant="outline-dark" onClick={handleCloseAddForm}>
-                            Add!
-                        </Button>
-                    </Modal.Footer>
+                    <Modal.Body><ContactForm handleCloseAddForm={handleCloseAddForm}></ContactForm></Modal.Body>
+
                 </Modal>
             </div>
 

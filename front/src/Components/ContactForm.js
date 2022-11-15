@@ -10,7 +10,7 @@ import { CREATE_CONTACT } from '../hooks/createContact'
 import { Mutation } from '@apollo/react-components'
 import './ContactForm.css'
 
-function ContactForm() {
+function ContactForm(props) {
     const [imgData, setImgData] = useState(null);
     const [filters, setFilters] = useState(DEFAULT_OPTIONS)
     const [contactForm, setContactForm] = useState({
@@ -114,6 +114,9 @@ function ContactForm() {
                 }
             }
         })
+        props.handleCloseAddForm()
+        window.location.reload(false);
+
 
     }
     return (

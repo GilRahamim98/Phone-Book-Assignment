@@ -33,7 +33,15 @@ function InputField(props) {
                     <Form.Group as={Col} md="6" >
                         <Form.Label>{props.name}</Form.Label>
                         <InputGroup hasValidation>
-                            <Form.Control
+                            {props.name === "Nickname" ? <Form.Control
+                                type={props.type}
+                                name={props.name.toLowerCase().replace(/\s/g, '')}
+                                placeholder={props.name}
+                                aria-describedby="inputGroupPrepend"
+                                onChange={props.handleChange}
+                                defaultValue={props.value}
+
+                            /> : <Form.Control
                                 type={props.type}
                                 name={props.name.toLowerCase().replace(/\s/g, '')}
                                 placeholder={props.name}
@@ -42,7 +50,8 @@ function InputField(props) {
                                 onChange={props.handleChange}
                                 defaultValue={props.value}
 
-                            />
+                            />}
+
                             <Form.Control.Feedback type="invalid">
                                 Please enter a valid {props.name}.
                             </Form.Control.Feedback>
