@@ -22,7 +22,7 @@ function InputField(props) {
                                 onComplete={files => files[0] ? props.handleChangePicture(files[0].fileUrl) : null}>
                                 {({ onClick }) =>
                                     <button onClick={onClick}>
-                                        Upload a photo...
+                                        {props.value ? <b>Change Photo</b> : <b>Upload a photo...</b>}
                                     </button>
                                 }
                             </UploadButton>
@@ -40,6 +40,7 @@ function InputField(props) {
                                 aria-describedby="inputGroupPrepend"
                                 required
                                 onChange={props.handleChange}
+                                defaultValue={props.value}
 
                             />
                             <Form.Control.Feedback type="invalid">

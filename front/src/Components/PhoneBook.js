@@ -25,17 +25,16 @@ function PhoneBook() {
     const handleCloseAddForm = () => setShowAddForm(false);
     const handleShowAddForm = () => setShowAddForm(true);
     useEffect(() => {
-        async function getContactsList() {
-            if (!loading) {
-                setContacts([...data.contacts])
+        getContactsList(data)
 
-            }
+    }, [loading])
+    function getContactsList(data) {
+        if (!loading) {
+            setContacts([...data.contacts])
 
         }
-        getContactsList()
-    }, [loading])
 
-
+    }
 
     const renderHover = (
         <Popover id="popover-basic">
@@ -46,10 +45,6 @@ function PhoneBook() {
     );
     const handleScroll = async (e) => {
         const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-
-
-
-
         if (bottom) {
             const newContacts = [...contacts]
             const firstContact = newContacts.shift()
@@ -62,7 +57,7 @@ function PhoneBook() {
 
 
     const createList = () => {
-        return contacts.slice(0, 5).map(contact => <ContactInList key={contact.contactId} {...contact}></ContactInList>)
+        return contacts.slice(0, 5).map(contact => <ContactInList key={contact.contactId} contact={contact} getContacts={getContactsList}></ContactInList>)
     }
 
 
@@ -72,7 +67,6 @@ function PhoneBook() {
                 <Button className="topcorner" variant="outline-dark" size="lg" onClick={handleShowAddForm}><TbUserPlus ></TbUserPlus></Button>
             </OverlayTrigger>
             <h1 className='display-1'>Contacts List</h1>
-
             <div>
                 <section style={{ display: 'flex' }}>
                     <FloatingLabel
