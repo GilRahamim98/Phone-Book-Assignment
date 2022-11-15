@@ -7,6 +7,8 @@ const GET_CONTACTS = gql`
             firstName
             lastName
             nickname
+            phoneNumbers
+            address
             photo
             
           }

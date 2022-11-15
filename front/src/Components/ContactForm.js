@@ -4,14 +4,15 @@ import Button from 'react-bootstrap/Button'
 import InputField from './InputField'
 import Image from 'react-bootstrap/Image'
 import { validate } from '../common/validations'
-import './ContactForm.css'
 import FilterSlider from './FilterSlider'
 import { DEFAULT_OPTIONS } from '../common/filters'
 import { CREATE_CONTACT } from '../hooks/createContact'
-import { useMutation } from '@apollo/client'
-
+import { Mutation } from '@apollo/react-components'
+import './ContactForm.css'
 
 function ContactForm() {
+    const [imgData, setImgData] = useState(null);
+    const [filters, setFilters] = useState(DEFAULT_OPTIONS)
     const [contactForm, setContactForm] = useState({
         firstname: {
             value: '',
@@ -33,6 +34,9 @@ function ContactForm() {
         },
         nickname: {
             value: '',
+            validations: {
+                required: true,
+            },
             type: "text",
             name: "Nickname",
         },
@@ -62,37 +66,6 @@ function ContactForm() {
             name: "Photo",
         }
     })
-    const [imgData, setImgData] = useState(null);
-    const [filters, setFilters] = useState(DEFAULT_OPTIONS)
-    const [createContact, { error }] = useMutation(CREATE_CONTACT)
-
-    const addContact = () => {
-        createContact({
-            variables: {
-                firstName: "Dani",
-                // lastName: "Lolo",
-                // nickname: "Dan",
-                // phoneNumbers: ["0525381649"],
-                // address: "Golani 70,Ramat Gan",
-                // photo: ["https://upcdn.io/W142hJk/raw/demo/4Da9imN.jpg", "grayscale(20 %) blur(3px) saturate(193 %)"]
-            }
-        })
-
-        // createContact({
-        //     variables: {
-        //         firstName: contactForm.firstname.value,
-        //         lastName: contactForm.lastname.value,
-        //         nickname: contactForm.nickname.value,
-        //         phoneNumbers: contactForm.phonenumbers.value.split(','),
-        //         address: contactForm.address.value,
-        //         photo: [contactForm.photo.value, getImageStyle().filter]
-        //     }
-        // })
-
-        if (error) {
-            console.log(error)
-        }
-    }
 
 
     const onChangePicture = (url) => {
@@ -100,9 +73,9 @@ function ContactForm() {
         const currentInput = contactForm.photo
         currentInput.value = url
         setContactForm({ ...contactForm })
-    };
+    }
     const handleSliderChange = ({ target }) => {
-
+        console.log(filters);
         setFilters(prevFilters => {
             return prevFilters.map((filter) => {
                 if (filter.name !== target.name) return filter
@@ -124,39 +97,47 @@ function ContactForm() {
         const options = filters.map(filter => {
             return `${filter.property}(${filter.value}${filter.unit})`
         })
-
         return { filter: options.join(' ') }
     }
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, createContact) => {
         e.preventDefault()
-        await addContact()
+
+        createContact({
+            variables: {
+                createContactData: {
+                    firstName: contactForm.firstname.value,
+                    lastName: contactForm.lastname.value,
+                    nickname: contactForm.nickname.value,
+                    phoneNumbers: contactForm.phonenumbers.value.split(','),
+                    address: contactForm.address.value,
+                    photo: [contactForm.photo.value, JSON.stringify(filters)]
+                }
+            }
+        })
 
     }
-
     return (
-        <Form onSubmit={handleSubmit}>
-            {createForm()}
-            {!imgData ?
-                null :
-                <>
-                    <div>
-                        <Image className="profile_pic" thumbnail src={imgData} alt="profilePic" style={getImageStyle()} />
-                        <h1>Filters:</h1>
-                        {filters.map(filter => <FilterSlider key={filter.name}
-                            name={filter.name}
-                            min={filter.range.min}
-                            max={filter.range.max}
-                            value={filter.value}
-                            handleChange={handleSliderChange}></FilterSlider>)}
-
-                    </div>
-                </>
-            }
-            <Button type="submit">Add!</Button>
-
-
-        </Form>
+        <Mutation mutation={CREATE_CONTACT}>
+            {(createContact, { data }) => (
+                < Form onSubmit={(e) => handleSubmit(e, createContact)}>
+                    {createForm()}
+                    {!imgData ?
+                        null :
+                        <div>
+                            <Image className="profile_pic" thumbnail src={imgData} alt="profilePic" style={getImageStyle()} />
+                            <h1>Filters:</h1>
+                            {filters.map(filter => <FilterSlider key={filter.name}
+                                name={filter.name}
+                                min={filter.range.min}
+                                max={filter.range.max}
+                                value={filter.value}
+                                handleChange={handleSliderChange}></FilterSlider>)}
+                        </div>
+                    }
+                    <Button type="submit">Add!</Button>
+                </Form >
+            )}
+        </Mutation >
     )
 }
-
 export default ContactForm
