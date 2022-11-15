@@ -132,8 +132,6 @@ function UpdateContactForm(props) {
         <Mutation mutation={UPDATE_CONTACT}>
             {(updateContact, { data }) => (
                 <>
-                    <Button onClick={() => deleteContactRequest()}>Delete</Button>
-
                     <Form onSubmit={(e) => handleSubmit(e, updateContact)}>
                         {createForm()}
                         <div>
@@ -146,12 +144,15 @@ function UpdateContactForm(props) {
                                 value={filter.value}
                                 handleChange={handleSliderChange}></FilterSlider>)}
                         </div>
+                        <div >
+                            <Button variant="danger" size="lg" style={{ width: "8rem", height: "5rem" }} onClick={() => deleteContactRequest()}>Delete</Button>{" "}
+                            <Button type="submit" size="lg" style={{ width: "8rem" }} >Save Changes</Button>
+                        </div>
 
-                        <Button type="submit">Save Changes!</Button>
-                    </Form >
+                    </Form>
                 </>
             )}
-        </Mutation >
+        </Mutation>
     )
 }
 

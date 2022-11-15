@@ -4,6 +4,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import { UploadButton } from "react-uploader";
 import { Uploader } from "uploader";
+import Button from 'react-bootstrap/Button';
 
 
 const uploader = Uploader({
@@ -15,22 +16,22 @@ function InputField(props) {
         <>
             {
                 props.type === "file" ?
-                    <> <Form.Group as={Col} md="6" >
+                    <Form.Group as={Col}  >
                         <Form.Label>{props.name}</Form.Label>
                         <InputGroup >
                             <UploadButton options={{ mimeTypes: ["image/jpeg", "image/png"] }} uploader={uploader}
                                 onComplete={files => files[0] ? props.handleChangePicture(files[0].fileUrl) : null}>
                                 {({ onClick }) =>
-                                    <button onClick={onClick}>
-                                        {props.value ? <b>Change Photo</b> : <b>Upload a photo...</b>}
-                                    </button>
+                                    <Button size="lg" variant='outline-primary' onClick={onClick} style={{ width: "15rem" }}>
+                                        {props.value ? <span>Change Photo</span> : <span>Upload a photo</span>}
+                                    </Button>
                                 }
                             </UploadButton>
                         </InputGroup>
 
                     </Form.Group>
-                    </> :
-                    <Form.Group as={Col} md="6" >
+                    :
+                    <Form.Group as={Col}  >
                         <Form.Label>{props.name}</Form.Label>
                         <InputGroup hasValidation>
                             {props.name === "Nickname" ? <Form.Control

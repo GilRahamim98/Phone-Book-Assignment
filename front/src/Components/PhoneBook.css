@@ -1,9 +1,7 @@
 .scroll {
-    margin-top: 5%;
+    margin-top: 3%;
     max-height: 470px;
     overflow-y: scroll;
-    /* -ms-overflow-style: none;
-    scrollbar-width: none; */
     width: 30%;
     margin-left: 35%;
 }
@@ -29,17 +27,25 @@
     scrollbar-color: #000000 #ffffff;
 }
 
-/* .scroll::-webkit-scrollbar {
-    display: none;
-} */
-
-.search_bar {
-    width: 20%;
-    margin-left: 40%;
+.add-modal {
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.topcorner {
-    position: absolute;
-    top: 0;
-    right: 0;
+
+@media (max-width:480px) {
+    .navbar-middle {
+        margin-left: 0;
+    }
+}
+
+@media (min-width:1025px) {
+    .navbar-middle {
+        margin-left: 25%;
+    }
+
+    .search_bar {
+        width: 28rem;
+    }
+
 }
