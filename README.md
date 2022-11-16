@@ -18,22 +18,22 @@ Clone the repo (Or download the project):
 
 
 ### Install NPM packages:
-Enter to the front folder:
+Enter in the terminal to the front folder :
 <pre>npm install</pre>
-Enter to the backend folder enter to phonebook and then:
+Enter in the terminal to the backend folder enter to phonebook and then:
 <pre>npm install</pre>
 
 Change the database information to yours in app.module.ts file:
-<pre>host: your host name,
-port: your port number,
-username: your user name',
-password: your password,
-database: your database name</pre>
+<pre>host,
+port,
+username,
+password,
+database</pre>
 
 ### When everything is installed:
-Enter to the front folder:
+Enter in the terminal to the front folder:
 <pre>npm start</pre>
-Enter to the backend folder enter to phonebook and then:
+Enter in the terminal to the backend folder enter to phonebook and then:
 <pre>npm run start:dev</pre>
 
 
