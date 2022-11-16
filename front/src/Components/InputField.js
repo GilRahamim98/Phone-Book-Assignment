@@ -41,7 +41,6 @@ function InputField(props) {
                                 aria-describedby="inputGroupPrepend"
                                 onChange={props.handleChange}
                                 defaultValue={props.value}
-
                             /> : <Form.Control
                                 type={props.type}
                                 name={props.name.toLowerCase().replace(/\s/g, '')}
@@ -52,11 +51,14 @@ function InputField(props) {
                                 defaultValue={props.value}
 
                             />}
-
                             <Form.Control.Feedback type="invalid">
                                 Please enter a valid {props.name}.
                             </Form.Control.Feedback>
                         </InputGroup>
+                        {props.name === "Phone Numbers" ?
+                            <Form.Text className="text-muted">
+                                Please enter valid phone numbers <br></br> with a comma between them.
+                            </Form.Text> : null}
                     </Form.Group>
             }
 
