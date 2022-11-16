@@ -13,8 +13,9 @@ This project is a phone book for saving contacts.
 
 ## Getting Started
 
-Clone the repo:
+Clone the repo (Or download the project):
 <pre>https://github.com/GilRahamim98/Phone-Book-Assignment.git</pre>
+
 
 ### Install NPM packages:
 Enter to the front folder:
